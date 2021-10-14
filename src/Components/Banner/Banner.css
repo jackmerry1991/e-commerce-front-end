@@ -1,0 +1,42 @@
+.banner {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border-bottom: 1vh grey;
+}
+
+.hamburger-menu-button {
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    .hamburger-menu-button {
+        display: inline-block;
+    }
+}
+
+.banner-logo {
+    width: 5%;
+}
+
+.banner-links {
+    display: flex;
+    margin-right: 2vh;
+}
+
+.banner-searchBar {
+    display: flex;
+}
+
+.banner-rightSide {
+    display: flex;
+}
+
+.banner-rightSide ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.banner-rightSide li {
+    margin-right: 2vh;
+}
