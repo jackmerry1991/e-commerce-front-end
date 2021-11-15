@@ -4,6 +4,7 @@ import Home from './Components/Home/Home'
 import Register from './Components/Register/Register'
 import Login from './Components/Login/Login'
 import Banner from './Components/Banner/Banner'
+import PasswordReset from './Components/PasswordReset/PasswordReset'
 import './App.css'
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
                     </Route>
                     <Route path="/login">
                         <Login />
+                    </Route>
+                    <Route path="/password-reset">
+                        <PasswordReset />
                     </Route>
                 </Switch>
             </Router>

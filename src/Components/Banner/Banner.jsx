@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Banner.css'
 import menuIcon from '../../Images/menu-icon.svg'
 import closeIcon from '../../Images/close-menu.svg'
-import searchByProduct from '../../UtilityFunctions/api'
+import {searchByProduct} from '../../UtilityFunctions/api'
 
 
 
@@ -20,14 +20,15 @@ const Banner = () => {
         searchByProduct(searchTerm)
     }
     
-    const toggleDropDown = () => {
-        setDropDownIsOpen(!dropDownIsOpen);
-        console.log('open');
-        console.log(dropDownIsOpen)
+    const toggleDropDown = async () => {
+        await setDropDownIsOpen(!dropDownIsOpen);
+        console.log(!dropDownIsOpen)
         if(!dropDownIsOpen){
+            console.log('opening menu');
             setDropDownMenuClass('mobile-drop-down-open')
             setOverlayClass('menu-overlay-active');
         }else{
+            console.log('closing menu');
             setDropDownMenuClass('mobile-drop-down-closed');
             setOverlayClass('menu-overlay');
         }
@@ -73,7 +74,7 @@ const Banner = () => {
                             <a href="/Home">Home</a>
                             <a href="/ContactUs">Contact Us</a>
                             <a href="/Cart">Cart</a>
-                            <a href="Sign in">Sign In</a>
+                            <a href="/Login">Sign In</a>
                         </ul>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ const axios = require('axios').default
 
 const backendUrl = 'http://127.0.0.1:8000'
 
-const searchByProduct = async (searchTerm) => {
+export const searchByProduct = async (searchTerm) => {
     const searchResult = await axios.get(`${backendUrl}/products/search`, {
         params: {
             searchTerm,
@@ -15,4 +15,17 @@ const searchByProduct = async (searchTerm) => {
     return searchResult
 }
 
-export default searchByProduct
+export const submitLogin = async (userName, password) => {
+    try{
+        const successfulLogin = await axios.post(`${backendUrl}/user/login`, {
+            email: userName,
+            password
+    });
+        console.log('successful login');
+        console.log(successfulLogin);
+        return successfulLogin;
+    }catch(error){
+        console.log(error);
+        return error.response.status;
+    }
+}
