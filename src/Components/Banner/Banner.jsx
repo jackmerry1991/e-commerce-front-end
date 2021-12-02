@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Banner.css'
 import menuIcon from '../../Images/menu-icon.svg'
 import closeIcon from '../../Images/close-menu.svg'
-import {searchByProduct} from '../../UtilityFunctions/api'
-
+import {searchByProduct, userLoggedIn} from '../../UtilityFunctions/api'
 
 
 const Banner = () => {
@@ -11,6 +10,7 @@ const Banner = () => {
     const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
     const [dropDownMenuClass, setDropDownMenuClass] = useState('mobile-drop-down-closed');
     const [overlayClass, setOverlayClass] = useState('menu-overlay');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value)
@@ -33,6 +33,13 @@ const Banner = () => {
             setOverlayClass('menu-overlay');
         }
     }
+
+    useEffect(() => {
+        userLoggedIn().then((result)=> {
+            console.log(result);
+            setIsLoggedIn(result);
+        })
+    }, [dropDownIsOpen]);
 
     return (
         <div className="banner">
@@ -62,7 +69,7 @@ const Banner = () => {
                     </button>
                 </div>
                 <ul>
-                    <li>Sign in</li>
+                    {isLoggedIn ? <li>My Account</li> : <li>Sign in</li>}
                     <li>Cart</li>
                 </ul>
                 <div className="menu-container">{
@@ -74,7 +81,7 @@ const Banner = () => {
                             <a href="/Home">Home</a>
                             <a href="/ContactUs">Contact Us</a>
                             <a href="/Cart">Cart</a>
-                            <a href="/Login">Sign In</a>
+                            {isLoggedIn ? <a href="/my-account">My Account</a>:<a href="/Login">Sign In</a>}
                         </ul>
                     </div>
                 </div>

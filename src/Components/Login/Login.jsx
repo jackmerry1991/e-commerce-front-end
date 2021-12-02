@@ -13,26 +13,26 @@ const Login = () => {
     const handleSubmit= async (event) => {
         event.preventDefault();
         const successfulLogin = await submitLogin(userName.toLowerCase(), password);
+        console.log(successfulLogin)
         if(successfulLogin === 401){
             const failedLoginAttempts = failedLogin + 1;
             setFailedLogin(failedLoginAttempts);
-            return {};
+            return;
         }
         
         if(!successfulLogin){
             setErrorMessage('Something went wrong with our servers.');
             console.log(errorMessage);
-            return {};
+            return;
         }
 
         if(successfulLogin){
             await setToken(successfulLogin.data);
-            console.log(successfulLogin.data);
+            console.log(successfulLogin.data.token);
             console.log(token);
-            document.cookie = `token=${successfulLogin.data}`
+            document.cookie = successfulLogin.data.token;
         }
 
-        return {}
     }
 
     const handleChange = (event) => {
@@ -58,7 +58,7 @@ const Login = () => {
               </div>
             </div>
             {token ? <Redirect to='/home'/> : <div />}
-        </div>
+        </div>   
     )
 }
 
