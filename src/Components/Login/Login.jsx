@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom';
-import { submitLogin } from '../../UtilityFunctions/api';
+import { postData, setUser, submitLogin } from '../../UtilityFunctions/api';
 import './Login.css'
 
 const Login = () => {
@@ -9,6 +9,25 @@ const Login = () => {
     const[failedLogin, setFailedLogin] = useState(0);
     const[errorMessage, setErrorMessage] = useState('');
     const[token, setToken] = useState('');
+
+    const addQueuedItemsToCart = async () => {
+        console.log('addqueuedtocart');
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        
+        console.log(cart);
+        if(!cart) return;
+        // const data = cart;
+        console.log(cart);
+        if(Array.isArray(cart)){
+            cart.map( async (item) => {
+                console.log('login postdata')
+                await postData('/carts/add-item', item)
+            })
+        }else{
+            console.log('login post data')
+            await postData('/carts/add-item', cart)
+        }
+    }
 
     const handleSubmit= async (event) => {
         event.preventDefault();
@@ -27,7 +46,11 @@ const Login = () => {
         }
 
         if(successfulLogin){
+            document.cookie = successfulLogin.data.token;
+            await addQueuedItemsToCart();
             await setToken(successfulLogin.data);
+            console.log(successfulLogin);
+            await setUser(successfulLogin.data.user.id);
             console.log(successfulLogin.data.token);
             console.log(token);
             document.cookie = successfulLogin.data.token;

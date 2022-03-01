@@ -1,0 +1,8 @@
+.payment-form-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-form-container input{
+   margin-bottom: 1rem;
+}

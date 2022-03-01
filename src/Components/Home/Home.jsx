@@ -1,10 +1,9 @@
 import React from 'react'
-import ProductList from '../ProductList/ProductList'
+import './home.css'
 
 const Home = () => 
-<div>
+<div className="home-container">
      <h1>Home</h1>
-<ProductList />
 </div>
 
 export default Home

@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter, Link, useHistory } from 'react-router-dom'
 import './Banner.css'
+import '../../App.css'
 import menuIcon from '../../Images/menu-icon.svg'
 import closeIcon from '../../Images/close-menu.svg'
-import {searchByProduct, userLoggedIn} from '../../UtilityFunctions/api'
-
+import searchIconImage from '../../Images/search_black_24dp.svg';
 
 const Banner = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
     const [dropDownMenuClass, setDropDownMenuClass] = useState('mobile-drop-down-closed');
     const [overlayClass, setOverlayClass] = useState('menu-overlay');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('userId'));
+    const [searchModalOpen, setSearchModalOpen] = useState(false);
+    
+    const history = useHistory();
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value)
     }
 
-    const handleSubmit = () => {
-        searchByProduct(searchTerm)
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const searchParam = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
+        console.log(`search param ${searchParam}`);
+        // const searchResults = await searchByProduct(searchParam);
+        history.push({
+            pathname: '/products-search',
+            search: `?query=${searchParam}`,
+            state: { searchTerm: searchParam }
+          })
+    }
+
+    const toggleSearchModal = () => {
+        setSearchModalOpen(!searchModalOpen);
     }
     
     const toggleDropDown = async () => {
@@ -35,10 +51,11 @@ const Banner = () => {
     }
 
     useEffect(() => {
-        userLoggedIn().then((result)=> {
-            console.log(result);
-            setIsLoggedIn(result);
-        })
+        const user = localStorage.getItem('userId');
+        if(user){
+            setIsLoggedIn(user);
+        }
+        console.log(isLoggedIn)
     }, [dropDownIsOpen]);
 
     return (
@@ -67,6 +84,9 @@ const Banner = () => {
                     <button className="banner-searchBar-button" type="submit" onClick={handleSubmit}>
                         Search
                     </button>
+
+                    <img className="search-icon" role="presentation" onClick={toggleSearchModal} src={searchIconImage} alt="search"/>
+
                 </div>
                 <ul>
                     {isLoggedIn ? <li>My Account</li> : <li>Sign in</li>}
@@ -77,15 +97,38 @@ const Banner = () => {
                     <img className="mobile-burger-menu" role="presentation"src={menuIcon} onClick={toggleDropDown} alt="menu"/>
                 }
                     <div className={dropDownMenuClass} id="menu-open">
-                        <ul>
+                    <div className="mobile-drop-down-top">
+                       <img className="mobile-burger-menu" role="presentation"src={closeIcon} onClick={toggleDropDown} alt="menu"/>
+                    </div>
+                    <div className="mobile-drop-down-top-lower">
+                            <BrowserRouter>
+                              <Link to={`/Search?/${searchTerm}`} className="mobile-drop-down-search">
+                                <img className="search-icon" src={searchIconImage}
+                                alt="search"
+                                />
+                              </Link>
+                            </BrowserRouter>
+                    </div>
+                        <ul className="mobile-drop-down-list">
                             <a href="/Home">Home</a>
                             <a href="/ContactUs">Contact Us</a>
                             <a href="/Cart">Cart</a>
                             {isLoggedIn ? <a href="/my-account">My Account</a>:<a href="/Login">Sign In</a>}
+                            {isLoggedIn && <a href="/my-orders">My Orders</a>}
                         </ul>
                     </div>
                 </div>
             </div>
+            {searchModalOpen && (
+                <div className="search-modal">
+                    <div className="search-modal__bar">
+                        <form onSubmit={handleSubmit}>
+                            <input type="text" placeholder='Search' onChange={handleChange}/>
+                        </form>
+                        <img className="drop-down-close-button" role="presentation"src={closeIcon} onClick={toggleSearchModal} alt="close"/>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
