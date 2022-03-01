@@ -1,0 +1,28 @@
+.cart-container {
+    margin: 0;
+}
+
+.cart-list{
+    margin: 0 !important;
+    width: 100%;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:space-between; */
+    text-align: center;
+}
+
+.cart-list{
+    margin: 0 !important;
+}
+
+.cart-list img{
+    height: 40px;
+    width: 100px;
+}
+
+.modal-button{
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    border-radius: 1rem;
+}

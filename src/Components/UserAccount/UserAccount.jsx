@@ -21,14 +21,21 @@ const UserAccount = () => {
             setUserData(data[0]);
             
             console.log(userData)
+            console.log('user data set')
         });
+    }, [])
+
+    useEffect(() => {
+        
+        if(!userData) return;
+        console.log('user data set after then')
         setFirstName(userData.first_name);
         setLastName(userData.last_name);
         setCity(userData.city);
         setStreet(userData.street);
         setEmail(userData.email);
         setPostcode(userData.post_code);
-    }, [])
+    }, [userData])
 
     const handleChange = (event) => {
         const eventTarget = event.target.id;
