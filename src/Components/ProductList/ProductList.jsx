@@ -10,34 +10,58 @@ const productList = () => {
     console.log('location state');
     const location = useLocation(); 
     const[searchTerm, setSearchTerm] = React.useState();
-  
+    const[categorySearch, setCategorySearch] = React.useState();
+
     React.useEffect(() => {
         console.log('location state useeffect running');
         console.log('location.state');
-        console.log(location.state);
-        if(!location.state.searchTerm){
+        console.log(location);
+        console.log('state' in location);
+        
+        if(!location.state){
             setSearchTerm('');
+            return;
+        }
+
+        if(!('searchTerm' in location.state)){
+            if(!('category' in location.state)){
+                setSearchTerm('');
+            }else{
+                setCategorySearch(location.state.category);
+            }
         }else{
             setSearchTerm(location.state.searchTerm);
         }
-    }, [location.state.searchTerm])
+    }, [location.state])
 
 
     React.useEffect(() => {
         console.log('searchterm')
         console.log(searchTerm);
-        if(!searchTerm){
-            console.log('no search term provided')
+        console.log('category search');
+        console.log(categorySearch);
+
+        if(!location.state){
             fetchData('products/').then(data =>
                 setProducts(data.data)
             ); 
-        }else{
-            console.log('search term given');
-            searchByProduct(searchTerm).then(data =>
+        }
+
+        if(categorySearch){
+            console.log('category search term given');
+            searchByProduct('category-search', categorySearch).then(data =>
                 setProducts(data.data)
             ); 
         }
-    }, [searchTerm]);
+        
+        if(searchTerm){
+            console.log('search term given');
+            searchByProduct('search', searchTerm).then(data =>
+                setProducts(data.data)
+            ); 
+        }
+        
+    }, [searchTerm, categorySearch]);
 
     return(
         <div>
