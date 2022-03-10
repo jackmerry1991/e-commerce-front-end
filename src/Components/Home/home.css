@@ -1,6 +1,33 @@
 .home-container{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.home-container__top {
+    margin-top: 2rem;
+    height: 100%;
+    width: 100%;
+    /* font-size: 2.1rem;
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center; */
+}
+
+.home-container__top h1 {
+    width: 90%;
+    overflow: wrap;
+}
+
+.home-image-container{
+    height: 50vh;
+    color: #fff;
+}
+
+.home-image-container img{
+    object-fit: contain;
 }

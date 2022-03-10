@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './Banner.css'
 import '../../App.css'
 import menuIcon from '../../Images/menu-icon.svg'
@@ -29,7 +29,9 @@ const Banner = () => {
             pathname: '/products-search',
             search: `?query=${searchParam}`,
             state: { searchTerm: searchParam }
-          })
+          });
+
+        setSearchModalOpen(false);
     }
 
     const toggleSearchModal = () => {
@@ -101,13 +103,7 @@ const Banner = () => {
                        <img className="mobile-burger-menu" role="presentation"src={closeIcon} onClick={toggleDropDown} alt="menu"/>
                     </div>
                     <div className="mobile-drop-down-top-lower">
-                            <BrowserRouter>
-                              <Link to={`/Search?/${searchTerm}`} className="mobile-drop-down-search">
-                                <img className="search-icon" src={searchIconImage}
-                                alt="search"
-                                />
-                              </Link>
-                            </BrowserRouter>
+                    <img className="search-icon" role="presentation" onClick={() => { toggleDropDown(); toggleSearchModal()}} src={searchIconImage} alt="search"/>
                     </div>
                         <ul className="mobile-drop-down-list">
                             <a href="/Home">Home</a>

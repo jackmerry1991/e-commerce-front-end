@@ -40,8 +40,8 @@ function App() {
                     <Route path="/my-account">
                         <UserAccount />
                     </Route>
-                    <Route path="/search">
-                        <UserAccount />
+                    <Route path="/category-search/:category">
+                        <ProductList />
                     </Route>
                     <Route path="/cart">
                         <Cart />

@@ -9,16 +9,13 @@ export const getRequest = async (route) =>{
     console.log(data.data);
     return data;
 }
-export const searchByProduct = async (searchTerm) => {
+export const searchByProduct = async (destination, searchTerm) => {
     console.log('searchByProduct');
     console.log(`backendUrl: ${backendUrl}`);
-    const searchResult = await axios.get(`${backendUrl}/products/search`, {
+    const searchResult = await axios.get(`${backendUrl}/products/${destination}`, {
         params: {
             searchTerm,
         },
-        // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        // },
     })
     return searchResult
 }
