@@ -56,7 +56,7 @@ const UserAccount = () => {
             case 'street':
                 setStreet(event.target.value);
                 break;
-            case 'postcode':
+            case 'post-code':
                 setPostcode(event.target.value);
                 break;
             default:

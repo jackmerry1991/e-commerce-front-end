@@ -16,8 +16,24 @@ export const searchByProduct = async (destination, searchTerm) => {
         params: {
             searchTerm,
         },
+
     })
     return searchResult
+}
+
+export const postDataNoHeader = async(destination, data) => {
+    console.log('postdata no header');
+    console.log(`${backendUrl}${destination}`)
+    try{
+        const result = await axios.post(`${backendUrl}${destination}`, data);
+        return result;
+    }catch(error){
+        console.log(error.response.data)
+        return error;
+
+    }
+
+
 }
 
 export const postData = async(destination, data) => {
